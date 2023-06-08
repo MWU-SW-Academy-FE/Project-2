@@ -18,13 +18,12 @@ function PostList({$target, initialState}) {
         let str = ""
         //console.log(data)
         if(data.documents.length!==0){
-            str += `<li data-id="${data.id}">${data.title}
+            str += `<li data-id="${data.id}">${data.title}<button class="addBtn">+</button><button class="delBtn">x</button></li>
                 <ul>
                     ${data["documents"].map(element => {
                         return this.createTreeView(element)  
                     }).join("")}
                 </ul>
-            </li>
             `
         } else {
             str += `<li data-id="${data.id}">${data.title}<button class="addBtn">+</button><button class="delBtn">x</button></li>`
@@ -58,7 +57,15 @@ function PostList({$target, initialState}) {
         if($li){
             const {id} = $li.dataset
             if (className==="addBtn"){
-                const newpost = await request(`/documents`,{method:"POST"},JSON.stringify({title:"new",parent:id}))
+                console.log(id)
+                const newpost = await request('/documents', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      title: '제목없음',
+                      parent: '130'
+                    })
+                  })
+                
                 push(`/${newpost.id}`)
             } else if (className==="delBtn"){
                 const x = await request(`/documents/${id}`,{method:"DELETE"})
@@ -66,7 +73,6 @@ function PostList({$target, initialState}) {
             } else{
                 push(`/${id}`)
             }
-            console.log(e.target.className)
         } 
     })
 }
