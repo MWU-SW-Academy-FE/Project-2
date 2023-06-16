@@ -1,6 +1,7 @@
 function Editor({
     $target,
-    initialState
+    initialState,
+    onUpdating
 }) {
     
     const $editor = document.createElement("div")
@@ -23,8 +24,19 @@ function Editor({
 
     this.render()
 
-    $editor.querySelector('[name="title"]')
+    $editor.addEventListener('keyup', (e) => {
+        const { target } = e
+        const { title } = this.state
+        const name = target.getAttribute('name')
 
+
+        const nextState = {
+            ...this.state,
+            [name]: target.value
+        }
+        this.setState(nextState)
+        onUpdating(this.state)
+   })
 
 }
 

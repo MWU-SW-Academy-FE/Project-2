@@ -15,11 +15,14 @@ function PostEditPage({$target, initialState}) {
     const editor = new Editor({
         $target: $page,
         initialState: post,
-        update : () => {
-            setTimeout(async (post)=>{
-                await request(`/document/${id}`,{
-                    method: 'PUT',
-                    body: JSON.stringify(post)
+        onUpdating : (post) => {
+            setTimeout(async ()=>{
+                const a = await request(`/documents/${this.state.id}`,{
+                    method: "PUT",
+                    body: JSON.stringify({
+                        title : post.title,
+                        content : post.content
+                    })
                 })
             }, 200)
         }
@@ -34,7 +37,6 @@ function PostEditPage({$target, initialState}) {
         }
         
         this.state = nextState
-        
         editor.setState(this.state.post || {
             title: '',
             content: ''
