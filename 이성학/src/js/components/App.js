@@ -1,6 +1,5 @@
 import PostEditPage from "./PostMain/PostEditPage.js";
 import PostPage from "./SideBar/PostPage.js";
-import { request } from "./api.js";
 import { initRouter } from "./router.js";
 function App({$target}) {
     const $sideBar = document.createElement("div")
@@ -12,7 +11,6 @@ function App({$target}) {
         $target :$sideBar
     })
 
-    postPage.render()
 
     
     const postEditPage = new PostEditPage({
@@ -20,19 +18,18 @@ function App({$target}) {
         initialState: {}
     })
 
-    postEditPage.render()
-
 
 
     this.route = () => {
         const {pathname} = window.location
-        if (pathname==='/src/index.html'){
+        if (pathname==='/이성학/src/index.html'){
             postEditPage.setState({})
-            postPage.render()
+            postPage.setState()
         } else {
-            const [,docId] = pathname.split('/src/index.html/')
-            postEditPage.setState({docId})
-            postPage.render()
+            const [q,id] = pathname.split('/src/index.html/')
+            console.log(id)
+            postEditPage.setState({id})
+            postPage.setState()
         }
     }
 

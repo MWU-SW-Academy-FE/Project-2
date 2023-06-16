@@ -5,7 +5,7 @@ export const initRouter = (router) => {
     window.addEventListener(ROUTE_CHANGE_EVENT,(e)=>{
         const {nextUrl}= e.detail
         //if (nextUrl){
-            history.pushState(null,null,`/src/index.html${nextUrl}`)
+            history.pushState(null,null,`/이성학/src/index.html${nextUrl}`)
             router()
         //}
 

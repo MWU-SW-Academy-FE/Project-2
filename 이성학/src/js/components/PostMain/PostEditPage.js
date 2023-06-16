@@ -3,36 +3,55 @@ import Editor from "./Editor.js";
 
 function PostEditPage({$target, initialState}) {
     const $page = document.createElement("div")
+    $target.appendChild($page)
 
     this.state = initialState
 
+    const post = {
+        title: '',
+        content: ''
+    }
+
     const editor = new Editor({
         $target: $page,
-
+        initialState: post,
+        update : () => {
+            setTimeout(async (post)=>{
+                await request(`/document/${id}`,{
+                    method: 'PUT',
+                    body: JSON.stringify(post)
+                })
+            }, 200)
+        }
     })
 
     this.setState = (nextState) => {
-        this.state = nextState
-        this.fetch(nextState.docId)
-        this.render()
-    }
 
-
-    this.render = () => {
-        $target.appendChild($page)
-    }
-
-    this.fetch = async (id) => {
-        let docContent
-        if (id){
-            docContent = await request(`/documents/${id}`)
-        } else {
-            docContent = {
-                title : "",
-                content: ""
-            }
+        if (this.state.id !== nextState.id){
+            this.state = nextState
+            this.fetch()
+            return
         }
-        editor.setState(docContent)
+        
+        this.state = nextState
+        
+        editor.setState(this.state.post || {
+            title: '',
+            content: ''
+        })
+    }
+
+
+
+    this.fetch = async () => {
+        const {id} = this.state
+        const post = await request(`/documents/${id}`)
+        
+        console.log(post)
+        this.setState({
+            ...this.state,
+            post
+        }) 
     }
 }
 

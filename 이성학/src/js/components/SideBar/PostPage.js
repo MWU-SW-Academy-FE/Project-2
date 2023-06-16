@@ -3,19 +3,19 @@ import { push } from "../router.js";
 import PostList from "./PostList.js";
 
 function PostPage({$target}) {
+    
     const $page = document.createElement("div")
+    $target.appendChild($page)
 
     const postList = new PostList({
         $target: $page,
         initialState: []
     })
 
-    this.render = async () => {
+    this.setState = async () => {
         const data = await request("/documents")
         postList.setState(data)
-        console.log(data)
 
-        $target.appendChild($page)
     }
 
     

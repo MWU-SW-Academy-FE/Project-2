@@ -1,9 +1,6 @@
 function Editor({
     $target,
-    initialState = {
-        title: "",
-        content: ""
-    }
+    initialState
 }) {
     
     const $editor = document.createElement("div")
