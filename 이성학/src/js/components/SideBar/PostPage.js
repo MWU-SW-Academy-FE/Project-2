@@ -21,12 +21,14 @@ function PostPage({$target}) {
     
     const $newBtn =  document.createElement("button")
     $page.appendChild($newBtn)
-    $newBtn.textContent = "new Page"
+    $newBtn.textContent = "+new Page"
+    $newBtn.className = "addNew"
 
     $newBtn.addEventListener('click', async (e)=>{
         const x = await request(`/documents`,{method:"POST"},JSON.stringify({title:"new",parent:null}))
         push(`/${x.id}`)
     })
+
 
 }
 export default PostPage;

@@ -3,7 +3,7 @@ import { push } from "../router.js"
 
 function PostList({$target, initialState}) {
     const $postList = document.createElement("div")
-
+    $postList.className = 'postList'
     $target.appendChild($postList)
 
     this.state = initialState
@@ -14,11 +14,15 @@ function PostList({$target, initialState}) {
         this.render() 
     }
 
-    this.createTreeView = (data) => {
+    this.createTreeView = (data, main=false) => {
         let str = ""
+        let mainstr = ""
+        if (main) {
+            mainstr= "🗒 "
+        }
         //console.log(data)
         if(data.documents.length!==0){
-            str += `<li data-id="${data.id}">${data.title}<button data-id="${data.id}" class="addBtn">+</button><button data-id="${data.id}" class="delBtn">x</button></li>
+            str += `<li class="dataList" data-id="${data.id}">${mainstr + data.title}<button data-id="${data.id}" class="addBtn">+</button><button data-id="${data.id}" class="delBtn">x</button></li>
                 <ul>
                     ${data["documents"].map(element => {
                         return this.createTreeView(element)  
@@ -26,7 +30,7 @@ function PostList({$target, initialState}) {
                 </ul>
             `
         } else {
-            str += `<li data-id="${data.id}">${data.title}<button data-id="${data.id}" class="addBtn">+</button><button data-id="${data.id}" class="delBtn">x</button></li>`
+            str += `<li class="dataList" data-id="${data.id}">${mainstr + data.title}<button data-id="${data.id}" class="addBtn">+</button><button data-id="${data.id}" class="delBtn">x</button></li>`
         }
         
 
@@ -39,7 +43,7 @@ function PostList({$target, initialState}) {
                 ${this.state
                     .map((data) => `
                     ${
-                        `${this.createTreeView(data)}` 
+                        `${this.createTreeView(data, true)}` 
                     }
                     `).join("")
                 }
@@ -71,7 +75,7 @@ function PostList({$target, initialState}) {
             } else if (className==="delBtn"){
                 const x = await request(`/documents/${id}`,{method:"DELETE"})
                 push(``)
-            } else{
+            } else if (className==="dataList"){
                 push(`/${id}`)
             }
         } 

@@ -3,7 +3,9 @@ import PostPage from "./SideBar/PostPage.js";
 import { initRouter } from "./router.js";
 function App({$target}) {
     const $sideBar = document.createElement("div")
+    $sideBar.className = 'listContainer'
     const $postMain = document.createElement("div")
+    $postMain.className = 'rendingContainer'
     $target.appendChild($sideBar)
     $target.appendChild($postMain)
 

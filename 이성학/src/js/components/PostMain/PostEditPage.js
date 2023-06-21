@@ -28,9 +28,14 @@ function PostEditPage({$target, initialState}) {
         }
     })
 
-    this.setState = (nextState) => {
-
-        if (this.state.id !== nextState.id){
+    this.setState = (nextState, isFetch = false) => {
+        if (this.state.id===undefined){
+            console.log("aaa")
+            $page.style = "display:none"
+        } else{
+            $page.style = "display:block"
+        }
+        if (isFetch === false){
             this.state = nextState
             this.fetch()
             return
@@ -43,17 +48,15 @@ function PostEditPage({$target, initialState}) {
         })
     }
 
-
+//ss
 
     this.fetch = async () => {
         const {id} = this.state
         const post = await request(`/documents/${id}`)
-        
-        console.log(post)
         this.setState({
             ...this.state,
             post
-        }) 
+        }, true) 
     }
 }
 
