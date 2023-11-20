@@ -1,0 +1,8 @@
+console.log(1)
+import App from "./components/App.js";
+
+const $app = document.querySelector("#app")
+
+new App({
+    $target: $app
+})
