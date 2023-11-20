@@ -1,4 +1,4 @@
-import NewBtn from "../button/NewBtn.js"
+import NewBtn from "../\bbutton/NewBtn.js"
 import { request } from "../../utils/api.js"
 import PostList from "./PostList.js"
 
@@ -10,15 +10,17 @@ export default function PostPage ({ $target }) {
     const postList = new PostList({ 
       $target: $page,
       initialState: [],
-      onAttach: async () => {
+      onAttach: async (id) => {
         await request('/documents', {
            method: 'POST',
-           body: {}
+           body: {
+            
+           }
         })
         this.setState()
       },
-      onDelete: async () => {
-        await request('/documents', {
+      onDelete: async (id) => {
+        await request(`/documents/${id}`, {
           method: 'DELETE'
         })
         this.setState()
