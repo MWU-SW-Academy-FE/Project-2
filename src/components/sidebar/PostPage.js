@@ -1,4 +1,4 @@
-import NewBtn from "../\bbutton/NewBtn.js"
+import NewBtn from "../button/NewBtn.js"
 import { request } from "../../utils/api.js"
 import PostList from "./PostList.js"
 
@@ -13,9 +13,10 @@ export default function PostPage ({ $target }) {
       onAttach: async (id) => {
         await request('/documents', {
            method: 'POST',
-           body: {
-            
-           }
+           body: JSON.stringify({
+            title: '제목없음',
+            parent: id
+           })
         })
         this.setState()
       },
