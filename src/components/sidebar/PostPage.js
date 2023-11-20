@@ -1,12 +1,13 @@
+import { request } from "../../utils/api.js"
 import PostList from "./PostList.js"
 
-export default function PostPage ({ $target, initialState }) {
+export default function PostPage ({ $target }) {
     const $page = document.createElement("div")
     $page.className = 'documentDiv'
     $target.appendChild($page)
-    new PostList({ 
-      $target: $page
-    })
+
+    // api 
+    const data = request("/documents")
 
     const testData = [
         {
@@ -33,7 +34,16 @@ export default function PostPage ({ $target, initialState }) {
         }
     ]
 
+    new PostList({ 
+      $target: $page,
+      testData
+    })
 
-
-    this.state = testData
+    // TODO: 컴포넌트화 시키기
+    const $newBtn = document.createElement("button")
+    $newBtn.textContent = "+ New Page"
+    $newBtn.className = "addNew"
+    $page.appendChild($newBtn)
+  
+    // this.state = testData
 }
